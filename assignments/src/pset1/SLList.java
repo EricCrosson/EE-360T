@@ -34,7 +34,35 @@ public class SLList{
         // postcondition: adds <e> in a new node in the list in sorted order;
         //                the rest of the list is unmodified
 
-        // your code goes here
+        Node inserter = new Node();
+        inserter.elem = e;
+        inserter.next = null;
 
+        /* Trivial case: header is null (list is empty) */
+        if (header == null) {
+            header = inserter;
+            return;
+        }
+        /* Weird case: new node replaces header (is smallest value) */
+        if (e < header.elem) {
+            inserter.next = header;
+            header = inserter;
+        }
+
+        /* Normal case: we must add a node somewhere in header's list. This will
+         * be one of two cases */
+        Node n = header;
+        while (n.next != null && n.next.elem > e) {
+            n = n.next;
+        }
+        /* case 1: add to end */
+        if (n.next == null) {
+            n.next = inserter;
+        }
+        /* case 2: insert between two nodes */
+        else {
+            inserter.next = n.next;
+            n.next = inserter;
+        }
     }
 }
