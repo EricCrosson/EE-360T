@@ -1,0 +1,15 @@
+Testsuite: pset1.SLListAddTester
+Tests run: 2, Failures: 2, Errors: 0, Time elapsed: 0.253 sec
+
+Testcase: test0 took 0.004 sec
+	FAILED
+null
+junit.framework.AssertionFailedError
+	at pset1.SLListAddTester.test0(SLListAddTester.java:16)
+
+Testcase: test1 took 0 sec
+	FAILED
+null
+junit.framework.AssertionFailedError
+	at pset1.SLListAddTester.test1(SLListAddTester.java:33)
+
