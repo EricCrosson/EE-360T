@@ -166,4 +166,56 @@ public class SLListRepOkTester {
         l.header = n;
         assertFalse(l.repOk());
     }
+
+    @Test public void t13() {
+
+        SLList l = new SLList();
+        Node n = new Node();
+        Node m = new Node();
+        n.elem = 1;
+        n.next = m;
+        m.elem = 0;
+        m.next = n;
+        l.header = n;
+        assertFalse(l.repOk());
+    }
+
+    @Test public void t14() {
+
+        SLList l = new SLList();
+        Node n = new Node();
+        Node m = new Node();
+        n.elem = 1;
+        n.next = m;
+        m.elem = 1;
+        m.next = n;
+        l.header = n;
+        assertFalse(l.repOk());
+    }
+
+    @Test public void t15() {
+
+        SLList l = new SLList();
+        Node n = new Node();
+        Node m = new Node();
+        n.elem = 0;
+        n.next = m;
+        m.elem = 0;
+        m.next = n;
+        l.header = n;
+        assertFalse(l.repOk());
+    }
+
+    @Test public void t16() {
+
+        SLList l = new SLList();
+        Node n = new Node();
+        Node m = new Node();
+        n.elem = 0;
+        n.next = m;
+        m.elem = 1;
+        m.next = n;
+        l.header = n;
+        assertFalse(l.repOk());
+    }
 }
