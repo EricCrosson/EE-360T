@@ -28,7 +28,9 @@ public class GraphGenerator {
         ClassGen cg = new ClassGen(jc);
         ConstantPoolGen cpg = cg.getConstantPool();
 
-        System.out.format("Scanning class %s\n", className);
+        if (GraphGenerator.DEBUG) {
+            System.out.format("Scanning class %s\n", className);
+        }
         for (Method m: cg.getMethods()) {
 
             MethodGen mg = new MethodGen(m, cg.getClassName(), cpg);
@@ -36,14 +38,18 @@ public class GraphGenerator {
             InstructionHandle[] handles = il.getInstructionHandles();
 
             /* Since branches can only target within the same method, keep a
-             * method-local list of un-found targets */
+                * method-local list of un-found targets */
             Map<Integer, InstructionHandle> unfound_targets = 
                 new HashMap<Integer, InstructionHandle>();
 
-            System.out.format("\tmethod %s\n", m.getName());
+            if (GraphGenerator.DEBUG) {
+                System.out.format("\tmethod %s\n", m.getName());
+            }
             for (int i = 0; i < handles.length; ++i) {
                 Instruction inst = handles[i].getInstruction();
-                System.out.println("Node: " + i);
+                if (GraphGenerator.DEBUG) {
+                    System.out.println("Node: " + i);
+                }
 
                 if (inst instanceof BranchInstruction) {
                     /* Branches have two output nodes */
@@ -51,14 +57,15 @@ public class GraphGenerator {
                 } 
 
                 /* If this is the target of a previously-seen branch */
-                for(Map.Entry<Integer, InstructionHandle> entry : unfound_targets.entrySet()) {
+                Iterator<Map.Entry<Integer, InstructionHandle>> iter = unfound_targets.entrySet().iterator();
+                while(iter.hasNext()) {
+                    Map.Entry <Integer, InstructionHandle> entry = iter.next();
                     if (entry.getValue() == handles[i]) {
                         /* Target found, add an edge */
                         cfg.addEdge(entry.getKey(), i, m, jc);
+                        iter.remove();
                     }
                 }
-                /* TODO: how do we handle targets that occur before the
-                 * conditional? e.g.: while loop */
 
                 /* Non-branches have one output node */
                 if (inst instanceof ReturnInstruction) {
@@ -67,15 +74,31 @@ public class GraphGenerator {
                 else if (i + 1 < handles.length) {
                     cfg.addEdge(i, i+1, m, jc);
                 }
-                    
+
                 if (GraphGenerator.DEBUG) {
                     System.out.format("\t\t%s\t%s\n", inst, inst.getOpcode());
                 }
             }
-            /* Switch all connections to the DUMMY node into connections to the
-             * RETURN node. */
+
+            /* Second pass -- if unfound_targets branched upward, they would
+             * have been missed by the first pass */
+            if (unfound_targets.size() > 0) {
+                for(int i = 0; i < handles.length; ++i) {
+                    Iterator<Map.Entry<Integer, InstructionHandle>> iter = unfound_targets.entrySet().iterator();
+                    while(iter.hasNext()) {
+                        Map.Entry <Integer, InstructionHandle> entry = iter.next();
+                        if (entry.getValue() == handles[i]) {
+                            /* Target found, add an edge */
+                            cfg.addEdge(entry.getKey(), i, m, jc);
+                            iter.remove();
+                        }
+                    }
+                }
+            }
         }
-        System.out.println(cfg);
+        if (GraphGenerator.DEBUG) {
+            System.out.println(cfg);
+        }
         return cfg;
     }
 
