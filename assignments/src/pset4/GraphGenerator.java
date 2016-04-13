@@ -27,6 +27,7 @@ public class GraphGenerator {
         JavaClass jc = Repository.lookupClass(className);
         ClassGen cg = new ClassGen(jc);
         ConstantPoolGen cpg = cg.getConstantPool();
+        final int DUMMY = Integer.MAX_VALUE;
 
         if (GraphGenerator.DEBUG) {
             System.out.format("Scanning class %s\n", className);
@@ -47,13 +48,14 @@ public class GraphGenerator {
             }
             for (int i = 0; i < handles.length; ++i) {
                 Instruction inst = handles[i].getInstruction();
+                int position = handles[i].getPosition();
                 if (GraphGenerator.DEBUG) {
-                    System.out.println("Node: " + i);
+                    System.out.println("Node: " + position);
                 }
 
                 if (inst instanceof BranchInstruction) {
                     /* Branches have two output nodes */
-                    unfound_targets.put(i, ((BranchInstruction) inst).getTarget());
+                    unfound_targets.put(position, ((BranchInstruction) inst).getTarget());
                 } 
 
                 /* If this is the target of a previously-seen branch */
@@ -62,17 +64,17 @@ public class GraphGenerator {
                     Map.Entry <Integer, InstructionHandle> entry = iter.next();
                     if (entry.getValue() == handles[i]) {
                         /* Target found, add an edge */
-                        cfg.addEdge(entry.getKey(), i, m, jc);
+                        cfg.addEdge(entry.getKey(), position, m, jc);
                         iter.remove();
                     }
                 }
 
                 /* Non-branches have one output node */
                 if (inst instanceof ReturnInstruction) {
-                    cfg.addEdge(i, handles.length, m, jc);
+                    cfg.addEdge(position, DUMMY, m, jc);
                 } 
                 else if (i + 1 < handles.length) {
-                    cfg.addEdge(i, i+1, m, jc);
+                    cfg.addEdge(position, handles[i+1].getPosition(), m, jc);
                 }
 
                 if (GraphGenerator.DEBUG) {
@@ -89,7 +91,7 @@ public class GraphGenerator {
                         Map.Entry <Integer, InstructionHandle> entry = iter.next();
                         if (entry.getValue() == handles[i]) {
                             /* Target found, add an edge */
-                            cfg.addEdge(entry.getKey(), i, m, jc);
+                            cfg.addEdge(entry.getKey(), handles[i].getPosition(), m, jc);
                             iter.remove();
                         }
                     }
