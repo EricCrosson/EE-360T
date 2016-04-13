@@ -9,12 +9,18 @@ JAVA_TARGET = '1.8'
 
 repositories.remote << "http://repo2.maven.org/maven2/"
 
+BCEL = 'org.apache.bcel:bcel:jar:5.2'
+
+Java.classpath << BCEL
+
 #--- Conform to course directory structure
 ass_layout = Layout.new
 ass_layout[:source, :main, :java] = 'assignments/src'
 ass_layout[:source, :test, :java] = 'assignments/test'
 
 define 'assignments', :layout => ass_layout do
+
+  compile.with BCEL
 
   #--- Project Group settings
   project.version = VERSION_NUMBER
