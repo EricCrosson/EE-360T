@@ -63,6 +63,10 @@ public class CFG {
         addEdge(p1, m, c, p2, m, c);
     }
     public String toString() {
+        if (GraphGenerator.DEBUG) {
+            return String.format("%d nodes\nnodes: %s\nedges: %s", nodes.size(), 
+                                 nodes, new PrettyPrintingMap<Node, Set<Node>>(edges));
+        }
         return String.format("%d nodes\nnodes: %s\nedges: %s", nodes.size(), 
                              nodes, edges);
     }
@@ -70,5 +74,30 @@ public class CFG {
                                String methodTo, String clazzTo) {
         /* TODO: implement in question 2.2 */
         return false;
+    }
+}
+
+class PrettyPrintingMap<K, V> {
+    private Map<K, V> map;
+
+    public PrettyPrintingMap(Map<K, V> map) {
+        this.map = map;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Iterator<Map.Entry<K, V>> iter = map.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry<K, V> entry = iter.next();
+            sb.append(entry.getKey());
+            sb.append('=').append('"');
+            sb.append(entry.getValue());
+            sb.append('"');
+            if (iter.hasNext()) {
+                sb.append(',').append('\n');
+            }
+        }
+        return sb.toString();
+
     }
 }
