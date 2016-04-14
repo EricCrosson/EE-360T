@@ -2,7 +2,8 @@
 # Written by Eric Crosson
 # 2016-02-02
 
-# $1 - pset (in english) to deploy -- will be name of package to deploy
+# $1 - dir containing pset (full name in english) to deploy -- will be name of
+# package to deploy
 target_pset=$1; shift
 
 source=../assignments/src/${target_pset}
