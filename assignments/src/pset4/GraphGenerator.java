@@ -21,7 +21,7 @@ import org.apache.bcel.generic.ReturnInstruction;
 public class GraphGenerator {
 
     /* TODO: change this */
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static int DUNCE = Integer.MAX_VALUE;
     public static Map<Method, Integer> dummyPoints = null;
 
@@ -166,18 +166,16 @@ public class GraphGenerator {
                     System.out.format("!!!!>>>>>> IS INVOKING CPG-GENERATOR on method name %s\n", ((InvokeInstruction)inst).getMethodName(cpg));
                     System.out.println();
                     System.out.println();
-                    String nMethod = ((InvokeInstruction)inst).getMethodName(cpg);
-                    Method rMethod = methodByName(cg, nMethod);
-                    int dummy = methodCrawler(cpg, jc, cg, nMethod, cfg);
-                    cfg.addEdge(position, method, jc, 0, rMethod, Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)));
-                    int endpoint = DUMMY;
-                    if (i+1 < handles.length) {
-                        endpoint = handles[i+1].getPosition();
-                    }
-                    cfg.addEdge(dummy, rMethod, Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)), endpoint, method, jc);
                 }
-                        // createCFG();
-                        /* cfg.addEdge(position, m, jc, ); */
+                String nMethod = ((InvokeInstruction)inst).getMethodName(cpg);
+                Method rMethod = methodByName(cg, nMethod);
+                int dummy = methodCrawler(cpg, jc, cg, nMethod, cfg);
+                cfg.addEdge(position, method, jc, 0, rMethod, Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)));
+                int endpoint = DUMMY;
+                if (i+1 < handles.length) {
+                    endpoint = handles[i+1].getPosition();
+                }
+                cfg.addEdge(dummy, rMethod, Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)), endpoint, method, jc);
             }
             else if (i + 1 < handles.length) {
                 cfg.addEdge(position, handles[i+1].getPosition(), method, jc);
@@ -296,16 +294,14 @@ public class GraphGenerator {
                         System.out.println();
                         System.out.println();
                         System.out.println();
-                        int dummy = methodCrawler(cpg, jc, cg, methodName, cfg);
-                        cfg.addEdge(position, m, jc, 0, methodByName(cg, methodName), Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)));
-                        int endpoint = DUMMY;
-                        if(i+1 < handles.length) {
-                            endpoint = handles[i+1].getPosition();
-                        }
-                        cfg.addEdge(dummy, methodByName(cg, methodName), Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)), endpoint, m, jc);
                     }
-                    // createCFG();
-                    /* cfg.addEdge(position, m, jc, ); */
+                    int dummy = methodCrawler(cpg, jc, cg, methodName, cfg);
+                    cfg.addEdge(position, m, jc, 0, methodByName(cg, methodName), Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)));
+                    int endpoint = DUMMY;
+                    if(i+1 < handles.length) {
+                        endpoint = handles[i+1].getPosition();
+                    }
+                    cfg.addEdge(dummy, methodByName(cg, methodName), Repository.lookupClass(((InvokeInstruction)inst).getClassName(cpg)), endpoint, m, jc);
                 }
                 else if (i + 1 < handles.length) {
                     cfg.addEdge(position, handles[i+1].getPosition(), m, jc);

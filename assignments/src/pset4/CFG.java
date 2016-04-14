@@ -70,9 +70,30 @@ public class CFG {
         return String.format("%d nodes\nnodes: %s\nedges: %s", nodes.size(), 
                              nodes, edges);
     }
+
     public boolean isReachable(String methodFrom, String clazzFrom,
                                String methodTo, String clazzTo) {
-        /* TODO: implement in question 2.2 */
+        if (clazzFrom.equals(clazzTo) && methodFrom.equals(methodTo)) { return true; }
+
+        Queue<Node> que = new LinkedList<Node>();
+        for (Node n : nodes) {
+            if (n.getMethod().getName().equals(methodFrom) &&
+                n.getClazz().getClassName().equals(clazzFrom)) {
+                
+                /* From all matching methodFrom nodes */
+                que.add(n);
+            }
+        }
+        while(!que.isEmpty()) {
+            Node n = que.remove();           
+            if (n.getMethod().getName().equals(methodTo) &&
+                n.getClazz().getClassName().equals(clazzTo)) {
+                return true;
+            }
+            for (Node neighbor : edges.get(n)) {
+                que.add(neighbor);
+            }
+        }
         return false;
     }
 }

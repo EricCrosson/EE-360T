@@ -24,4 +24,15 @@ public class GraphGeneratorTester {
         gg.createCFGWithMethodInvocation("pset4.D");
     }
 
+    @Test public void TestIsReachableDMainAndFoo() throws ClassNotFoundException {
+        GraphGenerator gg = new GraphGenerator();
+        CFG cfg = gg.createCFGWithMethodInvocation("pset4.D");
+        assertTrue(cfg.isReachable("main", "pset4.D", "foo", "pset4.D"));
+    }
+
+    @Test public void TestIsReachableDMainAndBar() throws ClassNotFoundException {
+        GraphGenerator gg = new GraphGenerator();
+        CFG cfg = gg.createCFGWithMethodInvocation("pset4.D");
+        assertTrue(cfg.isReachable("main", "pset4.D", "bar", "pset4.D"));
+    }
 }
