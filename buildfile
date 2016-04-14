@@ -2,8 +2,6 @@
 # Written by Eric Crosson
 # 2016-01-25
 
-require 'buildr-eclipse-launch'
-
 VERSION_NUMBER = '0.1'
 JAVA_TARGET = '1.8'
 
