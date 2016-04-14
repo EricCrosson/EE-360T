@@ -1,0 +1,10 @@
+---
+language: java
+jdk:
+  - oraclejdk8
+
+bundler_args: "--without eclipse"
+before_script:
+  - bundle install
+script:
+  - buildr
