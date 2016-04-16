@@ -39,6 +39,12 @@ public class Graph {
         }
         neighbors.add(to);
         edges.put(from, neighbors);
+        /* Ensure to has a non-null edge list */
+        neighbors = edges.get(to);
+        if (neighbors == null) {
+            neighbors = new TreeSet<Integer>();
+        }
+        edges.put(to, neighbors);
     }
 
     /** True if
@@ -51,7 +57,7 @@ public class Graph {
     public boolean reachable(Set<Integer> sources, Set<Integer> targets) {
         if (sources == null || targets == null) throw new IllegalArgumentException();
         return (subsetOfNodes(sources) && subsetOfNodes(targets) && 
-                connectionToThis(sources, targets));
+                connectionTo(sources, targets));
     }
 
     /** True if {@code set} is a subset of {@code this.nodes} */
@@ -67,7 +73,7 @@ public class Graph {
 
     /** True if {@code from} contains a node {@code n} that connects to {@code
      * to} */
-    private boolean connectionToThis(Set<Integer> from, Set<Integer> to) {
+    private boolean connectionTo(Set<Integer> from, Set<Integer> to) {
         for (int m : from) {
             for (int n : to) {
                 if (search(m, n)) {
