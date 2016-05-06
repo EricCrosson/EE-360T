@@ -12,6 +12,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+/**  When MinWebTestSuite is run on the minandmax.html webpage:
+ * [junit] Testsuite: pset6.MinWebTestSuite
+ * [junit] Tests run: 128, Failures: 27, Errors: 0, Time elapsed: 27.441 sec
+ */
+
 public class MinWebTestSuite {
     private static WebDriver driver = null;
 
@@ -20,7 +25,7 @@ public class MinWebTestSuite {
 
         driver = new FirefoxDriver();  /* Launch the browser */
 /* Edit to the location of min.html on your local filesystem */
-        driver.get("file:///home/eric/workspace/ee360t/assignments/src/pset6/min.html");
+        driver.get("file:///home/eric/workspace/ee360t/assignments/src/pset6/minandmax.html");
     }
 
     @AfterClass
