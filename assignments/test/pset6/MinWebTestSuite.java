@@ -28,7 +28,7 @@ public class MinWebTestSuite {
 
         driver = new FirefoxDriver();  /* Launch the browser */
 /* Edit to the location of min.html on your local filesystem */
-        driver.get("file:///home/eric/workspace/ee360t/assignments/src/pset6/minandmax.html");
+        driver.get("file:///home/eric/workspace/ee360t/assignments/src/pset6/min.html");
     }
 
     @AfterClass
