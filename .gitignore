@@ -2,3 +2,4 @@ target/
 reports/
 deploy/
 *.class
+/assignments/test/pset6/MinWebTestSuite.java
