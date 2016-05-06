@@ -63,7 +63,7 @@ public class MinWebTestGenerator {
         String y = test.split(",")[1];
         String z = test.split(",")[2];
         String mouse = test.split(",")[3];
-        /* TODO: implement */
+
         boolean isx = isInteger(x);
         boolean isy = isInteger(y);
         boolean isz = isInteger(z);
