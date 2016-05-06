@@ -15,6 +15,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 /**  When MinWebTestSuite is run on the minandmax.html webpage:
  * [junit] Testsuite: pset6.MinWebTestSuite
  * [junit] Tests run: 128, Failures: 27, Errors: 0, Time elapsed: 27.441 sec
+ *
+ * These failures do not indicate a problem with minandmax.html, they represent
+ * an inability of these tests to conform to the page under test (PUT).
  */
 
 public class MinWebTestSuite {
