@@ -3,6 +3,11 @@ language: java
 jdk:
   - oraclejdk8
 
+addons:
+  sauce_connect:
+    username: hamroctopus
+    access_key: "41a9a47b-a507-486e-ac43-7ccfd47f64ab"
+
 bundler_args: "--without eclipse"
 before_script:
   - bundle install
