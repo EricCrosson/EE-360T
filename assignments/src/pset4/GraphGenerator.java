@@ -20,7 +20,6 @@ import org.apache.bcel.generic.ReturnInstruction;
 
 public class GraphGenerator {
 
-    /* TODO: change this */
     public static final boolean DEBUG = false;
     public static int DUNCE = Integer.MAX_VALUE;
     public static Map<Method, Integer> dummyPoints = null;
@@ -80,7 +79,6 @@ public class GraphGenerator {
                     }
                 }
 
-                /* TODO: ingnore switch instructions, jsr[_w], and method invocations */
                 /* Non-branches have one output node */
                 if (inst instanceof ReturnInstruction) {
                     cfg.addEdge(position, DUMMY, m, jc);
@@ -151,7 +149,6 @@ public class GraphGenerator {
                 }
             }
 
-            /* TODO: ingnore switch instructions, jsr[_w], and method invocations */
             /* Non-branches have one output node */
             if (inst instanceof ReturnInstruction) {
                 /* If this method has been crawled before, it will already have a DUMMY */
@@ -281,7 +278,6 @@ public class GraphGenerator {
                     }
                 }
 
-                /* TODO: ingnore switch instructions, jsr[_w], and method invocations */
                 /* Non-branches have one output node */
                 if (inst instanceof ReturnInstruction) {
                     cfg.addEdge(position, DUMMY, m, jc);
