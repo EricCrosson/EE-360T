@@ -13,8 +13,6 @@ engines:
     #enabled: true
   fixme:
     enabled: true
-  radon:
-    enabled: true
 ratings:
   paths:
   - Gemfile.lock
