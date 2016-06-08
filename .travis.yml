@@ -11,5 +11,8 @@ addons:
 bundler_args: "--without eclipse"
 before_script:
   - bundle install
+  - sudo apt-get update -qq
+  - sudo apt-get install firefox xvfb
+  - sudo Xvfb :10 -ac
 script:
-  - buildr
+  - DISPLAY=:10 buildr
